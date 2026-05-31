@@ -9,15 +9,45 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public FileMetadata findByFileName(
-        String fileName) {
+public class FileService {
 
-    List<FileMetadata> files =
-            fileRepository.findByFileName(fileName);
+    private final FileRepository fileRepository;
 
-    if (files.isEmpty()) {
-        return null;
+    public FileMetadata save(FileMetadata file) {
+
+        FileMetadata saved =
+                fileRepository.save(file);
+
+        System.out.println(
+                "FILE SAVED : "
+                        + saved.getFileName());
+
+        return saved;
     }
 
-    return files.get(0);
+    public List<FileMetadata> getAllFiles() {
+        return fileRepository.findAll();
+    }
+
+    public FileMetadata getFile(Long id) {
+        return fileRepository.findById(id)
+                .orElseThrow();
+    }
+
+    public void delete(Long id) {
+        fileRepository.deleteById(id);
+    }
+
+    public FileMetadata findByFileName(
+            String fileName) {
+
+        List<FileMetadata> files =
+                fileRepository.findByFileName(fileName);
+
+        if (files.isEmpty()) {
+            return null;
+        }
+
+        return files.get(0);
+    }
 }

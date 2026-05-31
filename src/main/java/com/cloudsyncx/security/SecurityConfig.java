@@ -15,6 +15,7 @@ public class SecurityConfig {
         System.out.println("CUSTOM SECURITY CONFIG LOADED");
 
         http
+                .cors(cors -> {})
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .anyRequest().permitAll()
